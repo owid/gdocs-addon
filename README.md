@@ -1,4 +1,4 @@
-Google Docs Apps Script to help authoring ArchieML documents.
+Google Docs add-on to help authoring ArchieML documents.
 
 ## Usage
 
@@ -20,3 +20,8 @@ This repo uses [clasp](https://github.com/google/clasp) to sync code with script
 - `clasp push`: upload local changes to scripts.google.com
 - `clasp pull`: download updates from scripts.google.com
 - `clasp open`: open the script in the browser
+
+### Resources
+
+- Apps Script: [edit in browser](https://script.google.com/home/projects/1WTxohPC8-ppgQ2Alrvum4W8P_zIXN988kD9DVBbfE86G4DgxKtjoxxd-/edit)
+- Google Cloud Platform: [owid-gdocs-addon project](https://console.cloud.google.com/home/dashboard?project=owid-gdocs-addon)

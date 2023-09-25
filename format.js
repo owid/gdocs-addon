@@ -3,7 +3,10 @@ function main() {
 }
 
 function onOpen(e) {
-  DocumentApp.getUi().createAddonMenu().addItem("Format ArchieML", "format").addToUi();
+  DocumentApp.getUi()
+    .createAddonMenu()
+    .addItem("Format ArchieML", "format")
+    .addToUi();
 }
 
 function getActiveDocument() {
@@ -56,13 +59,13 @@ function format() {
       // delimiter later
       openerStack.push(isObjectOpening ? "obj" : "arr");
 
-      colorIndentedParagraph(paragraph, indentationLevel);
+      colorIndentedDelimiter(paragraph, indentationLevel);
       // Indent the next paragraphs after opening of an ArchieML delimiter
       indentationLevel++;
     } else {
       // Unindent the current closing ArchieML delimiter
       indentParagraph(paragraph, --indentationLevel); // todo handle going below 0
-      colorIndentedParagraph(paragraph, indentationLevel);
+      colorIndentedDelimiter(paragraph, indentationLevel);
 
       // Signal if the closing delimiter does not match the opening delimiter
       const previousDelimiter = openerStack.pop();
@@ -70,7 +73,7 @@ function format() {
         (isObjectClosing && previousDelimiter !== "obj") ||
         (isArrayClosing && previousDelimiter !== "arr")
       ) {
-        paragraph.setForegroundColor("#FF0000");
+        colorIndentedDelimiter(paragraph, indentationLevel, true);
       }
     }
   });
@@ -91,10 +94,18 @@ function indentParagraph(paragraph, level) {
 }
 
 // Color ArchieML delimiters based on indentation level
-const colorIndentedParagraph = (paragraph, indentationLevel) => {
+const colorIndentedDelimiter = (
+  paragraph,
+  indentationLevel,
+  isError = false
+) => {
   const bracketColors = ["#f47835", "#23974a", "#FF00FF"];
 
-  paragraph.setForegroundColor(
-    bracketColors[indentationLevel % bracketColors.length]
-  );
+  const fgColor = isError
+    ? "#FF0000"
+    : bracketColors[indentationLevel % bracketColors.length];
+  const bgColor = isError ? "#FFFF00" : "#FFFFFF";
+
+  paragraph.setForegroundColor(fgColor);
+  paragraph.setBackgroundColor(bgColor);
 };

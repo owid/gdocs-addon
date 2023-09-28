@@ -7,7 +7,7 @@
 		"sidebarPreview": "vite preview",
 		"sidebarBuild": "vite build --emptyOutDir",
 		"sidebarBuild:watch": "npm run sidebarBuild -- --watch",
-		"push": "clasp push",
+		"push": "npx clasp push",
 		"push:watch": "npm run push -- --watch",
 		"dev": "npx tmex -n sidebarBuild:watch push:watch"
 	},
@@ -21,6 +21,7 @@
 		"semi": false
 	},
 	"devDependencies": {
+		"@google/clasp": "^2.4.2",
 		"@preact/preset-vite": "^2.5.0",
 		"@types/google-apps-script": "^1.0.72",
 		"@types/google.script.client-side": "^0.1.2",

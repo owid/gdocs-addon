@@ -13,6 +13,8 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"@types/google.script.client-side": "^0.1.2",
+		"antd": "^5.9.4",
 		"preact": "^10.13.1"
 	},
 	"prettier": {

@@ -2,7 +2,7 @@ function main() {
   format()
 }
 
-function onOpen(e) {
+function onOpen(e: any) {
   DocumentApp.getUi()
     .createAddonMenu()
     .addItem("Open", "showSidebar")
@@ -86,7 +86,10 @@ function format() {
   })
 }
 
-function formatPropertyName(name, paragraph) {
+function formatPropertyName(
+  name: string | any[],
+  paragraph: GoogleAppsScript.Document.Paragraph
+) {
   // Remove leading and trailing spaces from the property name
   // e.g. " name : value " would return "name: value"
   paragraph.editAsText().replaceText("^\\s*[a-zA-Z-]+\\s*:\\s*", `${name}: `)
@@ -95,15 +98,18 @@ function formatPropertyName(name, paragraph) {
   paragraph.editAsText().setForegroundColor(0, name.length, "#0094FF")
 }
 
-function indentParagraph(paragraph, level) {
+function indentParagraph(
+  paragraph: GoogleAppsScript.Document.Paragraph,
+  level: number
+) {
   paragraph.setIndentStart(level * 10)
   paragraph.setIndentFirstLine(level * 10)
 }
 
 // Color ArchieML delimiters based on indentation level
 const colorIndentedDelimiter = (
-  paragraph,
-  indentationLevel,
+  paragraph: GoogleAppsScript.Document.Paragraph,
+  indentationLevel: number,
   isError = false
 ) => {
   const bracketColors = ["#f47835", "#23974a", "#FF00FF"]
@@ -113,6 +119,6 @@ const colorIndentedDelimiter = (
     : bracketColors[indentationLevel % bracketColors.length]
   const bgColor = isError ? "#FFFF00" : "#FFFFFF"
 
-  paragraph.setForegroundColor(fgColor)
-  paragraph.setBackgroundColor(bgColor)
+  paragraph.editAsText().setForegroundColor(fgColor)
+  paragraph.editAsText().setBackgroundColor(bgColor)
 }

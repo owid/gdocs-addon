@@ -13,30 +13,25 @@ Google Docs add-on to help authoring ArchieML documents.
 This repo uses [clasp](https://github.com/google/clasp) to sync code with scripts.google.com.
 
 1. Clone this repository
-2. Install clasp: `npm install -g @google/clasp`
+2. `npm i`
 3. Enable the Google Apps Script API: https://script.google.com/home/usersettings
-4. Login to clasp: `clasp login`
+4. Login to clasp: `npx clasp login`
 
 ### Local development (sidebar)
 
-- `npm run dev`: start the local Vite dev server. This is helpful for quickly iterating on the visual components of the sidebar.
+- `npm run sidebarDev` to start the local Vite dev server. This is helpful for quickly iterating on the visual components of the sidebar. Remote calls to Google Apps Script functions (e.g. `format()`) will not work.
 
-### Testing on staging
+### Testing on a document
 
-- `clasp open`: open the script in the browser
-- `npm run buildAndDeployHead`: upload local changes to scripts.google.com (head deployment, doesn't impact end users)
-- `clasp pull`: download updates from scripts.google.com
-
-To test against a sample document:
-
-- Open [script](https://script.google.com/home/projects/1WTxohPC8-ppgQ2Alrvum4W8P_zIXN988kD9DVBbfE86G4DgxKtjoxxd-/edit)
+- `npx clasp open` to open the script in the browser
 - Click Deploy > Test Deployments
 - Select Version: "Latest code", Enabled: "true"
 - Click "Execute" to open the sample document with the extension in its HEAD version
+- `npm run dev` to start the sidebar Vite build watcher and upload local changes to scripts.google.com (HEAD deployment, doesn't impact end users).
 
-### Deployment
+## Public deployment
 
-- `clasp deploy` (make a note of the version number)
+- `npx clasp deploy` (make a note of the version number)
 - Enter the new version number in "Docs Add-on script version" on the [App Configuration page of the Google Workspace Marketplace SDK](https://console.cloud.google.com/apis/api/appsmarket-component.googleapis.com/googleapps_sdk?project=owid-gdocs-addon).
 - Hit "Save"
 

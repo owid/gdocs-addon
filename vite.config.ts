@@ -13,6 +13,15 @@ export default defineConfig({
   build: {
     minify: true,
     outDir: "../dist/sidebar",
+    rollupOptions: {
+      // see https://github.com/TanStack/query/issues/5175#issuecomment-1482196558
+      onwarn(warning, warn) {
+        if (warning.code === "MODULE_LEVEL_DIRECTIVE") {
+          return
+        }
+        warn(warning)
+      },
+    },
   },
   root: "sidebar",
 })

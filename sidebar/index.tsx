@@ -1,10 +1,12 @@
 import { render } from "preact"
-import { Button } from "antd"
+import Button from "@mui/material/Button"
 
 function App() {
   return (
     <div>
-      <Button onClick={() => google.script.run.format()}>Format</Button>
+      <Button variant="contained" onClick={() => google.script.run.format()}>
+        Format
+      </Button>
     </div>
   )
 }

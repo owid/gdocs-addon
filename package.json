@@ -3,13 +3,13 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"dev": "vite",
-		"build": "vite build --emptyOutDir",
+		"sidebarDev": "vite",
+		"sidebarPreview": "vite preview",
+		"sidebarBuild": "vite build --emptyOutDir",
+		"sidebarBuild:watch": "npm run sidebarBuild -- --watch",
 		"push": "clasp push",
-		"builAndPush": "npm run build && npm run push",
-		"build:watch": "npm run build -- --watch",
 		"push:watch": "npm run push -- --watch",
-		"preview": "vite preview"
+		"dev": "npx tmex -n sidebarBuild:watch push:watch"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.11.1",
@@ -26,6 +26,7 @@
 		"@types/google.script.client-side": "^0.1.2",
 		"eslint": "^8.50.0",
 		"eslint-config-preact": "^1.3.0",
+		"tmex": "^1.0.11",
 		"typescript": "^5.2.2",
 		"vite": "^4.3.2",
 		"vite-plugin-singlefile": "^0.13.5"

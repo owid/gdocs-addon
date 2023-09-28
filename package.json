@@ -5,11 +5,10 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build --emptyOutDir",
-		"postbuild": "npm run pushStaging",
-		"pushStaging": "clasp push",
-		"builAndPushStaging": "npm run build && npm run pushStaging",
+		"push": "clasp push",
+		"builAndPush": "npm run build && npm run push",
 		"build:watch": "npm run build -- --watch",
-		"pushStaging:watch": "npm run pushStaging -- --watch",
+		"push:watch": "npm run push -- --watch",
 		"preview": "vite preview"
 	},
 	"dependencies": {

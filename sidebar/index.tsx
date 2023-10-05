@@ -1,12 +1,10 @@
 import { render } from "preact"
-import Button from "@mui/material/Button"
+import { FormatCard } from "./Format"
 
 function App() {
   return (
     <div>
-      <Button variant="contained" onClick={() => google.script.run.format()}>
-        Format
-      </Button>
+      <FormatCard />
     </div>
   )
 }

@@ -6,8 +6,8 @@
     "noEmit": true,
     "allowJs": true,
     "checkJs": true,
-    "jsx": "react-jsx",
-    "jsxImportSource": "preact"
+    "jsx": "react-jsx"
+    // "jsxImportSource": "preact"
   },
   "include": ["node_modules/vite/client.d.ts", "**/*"]
 }

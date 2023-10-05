@@ -5,6 +5,7 @@ function onOpen(e: any) {
     .addItem("Format ArchieML", "format")
     .addToUi()
 }
+
 function showSidebar() {
   const html =
     HtmlService.createHtmlOutputFromFile("sidebar/index").setTitle("OWID Gdocs")

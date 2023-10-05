@@ -1,9 +1,19 @@
-function format() {
-  // Get all paragraphs in the active document
-  const paragraphs = getActiveDocument().getBody().getParagraphs()
+interface ArchieMLFormatConfig {
+  shouldIndent: boolean
+  shouldHighlight: boolean
+}
 
+type ParagraphColors = [string, string]
+
+function format({ shouldIndent, shouldHighlight }: ArchieMLFormatConfig) {
   let indentationLevel = 0
   const openerStack = []
+  const mutedColors: ParagraphColors = ["#CCCCCC", "#FFFFFF"]
+  const errorColors: ParagraphColors = ["#FF0000", "#FFFF00"]
+  let colors: ParagraphColors
+
+  // Get all paragraphs in the active document
+  const paragraphs = getActiveDocument().getBody().getParagraphs()
 
   // Iterate over each paragraph
   paragraphs.forEach((paragraph) => {
@@ -16,7 +26,11 @@ function format() {
     // Check if the paragraph is an ArchieML property, e.g. "name: value"
     const property = text.match(/^\s*([a-zA-Z-]+)\s*:\s*/)
     if (property) {
-      formatPropertyName(property[1], paragraph)
+      formatPropertyName(
+        property[1],
+        paragraph,
+        !shouldHighlight ? mutedColors[0] : undefined
+      )
       return
     }
 
@@ -38,13 +52,19 @@ function format() {
       // delimiter later
       openerStack.push(isObjectOpening ? "obj" : "arr")
 
-      colorIndentedDelimiter(paragraph, indentationLevel)
-      // Indent the next paragraphs after opening of an ArchieML delimiter
-      indentationLevel++
+      colors = shouldHighlight
+        ? getColorsIndentationLevel(indentationLevel)
+        : mutedColors
+
+      // Indent the next paragraphs after opening of an ArchieML delimiter (if indenting is enabled)
+      if (shouldIndent) indentationLevel++
     } else {
-      // Unindent the current closing ArchieML delimiter
-      indentParagraph(paragraph, --indentationLevel) // todo handle going below 0
-      colorIndentedDelimiter(paragraph, indentationLevel)
+      // Unindent the current closing ArchieML delimiter (if indenting is enabled)
+      if (shouldIndent) indentParagraph(paragraph, --indentationLevel) // todo handle going below 0
+
+      colors = shouldHighlight
+        ? getColorsIndentationLevel(indentationLevel)
+        : mutedColors
 
       // Signal if the closing delimiter does not match the opening delimiter
       const previousDelimiter = openerStack.pop()
@@ -52,22 +72,26 @@ function format() {
         (isObjectClosing && previousDelimiter !== "obj") ||
         (isArrayClosing && previousDelimiter !== "arr")
       ) {
-        colorIndentedDelimiter(paragraph, indentationLevel, true)
+        colors = errorColors
       }
     }
+
+    // Color the delimiter with either highlight, muted or error colors
+    colorParagraph(paragraph, colors)
   })
 }
 
 function formatPropertyName(
   name: string | any[],
-  paragraph: GoogleAppsScript.Document.Paragraph
+  paragraph: GoogleAppsScript.Document.Paragraph,
+  color: string = "#0094FF"
 ) {
   // Remove leading and trailing spaces from the property name
   // e.g. " name : value " would return "name: value"
   paragraph.editAsText().replaceText("^\\s*[a-zA-Z-]+\\s*:\\s*", `${name}: `)
 
   // Set color of property name
-  paragraph.editAsText().setForegroundColor(0, name.length, "#0094FF")
+  paragraph.editAsText().setForegroundColor(0, name.length, color)
 }
 
 function indentParagraph(
@@ -78,19 +102,21 @@ function indentParagraph(
   paragraph.setIndentFirstLine(level * 10)
 }
 
-// Color ArchieML delimiters based on indentation level
-const colorIndentedDelimiter = (
+const colorParagraph = (
   paragraph: GoogleAppsScript.Document.Paragraph,
-  indentationLevel: number,
-  isError = false
+  colors: ParagraphColors
 ) => {
+  paragraph.editAsText().setForegroundColor(colors[0])
+  paragraph.editAsText().setBackgroundColor(colors[1])
+}
+
+const getColorsIndentationLevel = (
+  indentationLevel: number
+): ParagraphColors => {
   const bracketColors = ["#f47835", "#23974a", "#FF00FF"]
 
-  const fgColor = isError
-    ? "#FF0000"
-    : bracketColors[indentationLevel % bracketColors.length]
-  const bgColor = isError ? "#FFFF00" : "#FFFFFF"
+  const fgColor = bracketColors[indentationLevel % bracketColors.length]
+  const bgColor = "#FFFFFF"
 
-  paragraph.editAsText().setForegroundColor(fgColor)
-  paragraph.editAsText().setBackgroundColor(bgColor)
+  return [fgColor, bgColor]
 }

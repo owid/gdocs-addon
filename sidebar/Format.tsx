@@ -4,9 +4,9 @@ import {
   Typography,
   FormGroup,
   FormControlLabel,
-  Switch,
   CardActions,
   Button,
+  Checkbox,
 } from "@mui/material"
 import { useState } from "preact/hooks"
 
@@ -20,14 +20,10 @@ export const FormatCard = () => {
         <Typography gutterBottom variant="h5" component="div">
           Format
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Indent and highlight ArchieML markup. This will reveal missing or
-          erroneous closing tags.
-        </Typography>
         <FormGroup>
           <FormControlLabel
             control={
-              <Switch
+              <Checkbox
                 defaultChecked
                 value={shouldHighlight}
                 onChange={(e) => setShouldHighlight(e.target.checked)}
@@ -37,7 +33,7 @@ export const FormatCard = () => {
           />
           <FormControlLabel
             control={
-              <Switch
+              <Checkbox
                 defaultChecked
                 value={shouldIndent}
                 onChange={(e) => setShouldIndent(e.target.checked)}
@@ -46,6 +42,10 @@ export const FormatCard = () => {
             label="Indent"
           />
         </FormGroup>
+        <Typography variant="body2" color="text.secondary">
+          Indent and/or highlight ArchieML markup. This will reveal missing or
+          erroneous closing tags.
+        </Typography>
       </CardContent>
 
       <CardActions>

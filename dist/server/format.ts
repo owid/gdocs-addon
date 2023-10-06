@@ -5,7 +5,12 @@ interface ArchieMLFormatConfig {
 
 type ParagraphColors = [string, string]
 
-function format({ shouldIndent, shouldHighlight }: ArchieMLFormatConfig) {
+function format(
+  { shouldHighlight, shouldIndent }: ArchieMLFormatConfig = {
+    shouldHighlight: true,
+    shouldIndent: true,
+  }
+) {
   let indentationLevel = 0
   const openerStack = []
   const mutedColors: ParagraphColors = ["#CCCCCC", "#FFFFFF"]

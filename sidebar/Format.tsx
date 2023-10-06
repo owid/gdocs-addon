@@ -20,7 +20,7 @@ export const FormatCard = () => {
         <Typography gutterBottom variant="h5" component="div">
           Format
         </Typography>
-        <FormGroup>
+        <FormGroup row>
           <FormControlLabel
             control={
               <Checkbox

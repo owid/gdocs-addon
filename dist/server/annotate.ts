@@ -32,7 +32,7 @@ function annotateRefs() {
     element.asText().insertText(offset, "{ref}{/ref}")
 
     // Move the cursor to the middle of the inserted tags
-    const position = document.newPosition(element, offset + 5)
+    const position = document.newPosition(element.asText(), offset + 5)
     document.setCursor(position)
   }
 }

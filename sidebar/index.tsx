@@ -23,7 +23,10 @@ function App() {
           <Box display="flex" alignItems="flex-start">
             <Button
               variant="contained"
-              onClick={() => google.script.run.annotateRefs()}
+              onClick={() => {
+                google.script.run.annotateRefs()
+                google.script.host.editor.focus()
+              }}
               sx={{ mr: 1, flexShrink: 0 }}
             >
               {`{ref}`}

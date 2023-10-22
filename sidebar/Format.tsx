@@ -13,6 +13,7 @@ import { useState } from "preact/hooks"
 export const FormatCard = () => {
   const [shouldHighlight, setShouldHighlight] = useState(true)
   const [shouldIndent, setShouldIndent] = useState(true)
+  const [shouldHideRefs, setShouldHideRefs] = useState(true)
 
   return (
     <Card sx={{ maxWidth: 345, mb: 1 }}>
@@ -41,6 +42,16 @@ export const FormatCard = () => {
             }
             label="Indent"
           />
+          <FormControlLabel
+            control={
+              <Checkbox
+                defaultChecked
+                value={shouldHideRefs}
+                onChange={(e) => setShouldHideRefs(e.target.checked)}
+              />
+            }
+            label="Hide {ref}"
+          />
         </FormGroup>
         <Typography variant="body2" color="text.secondary">
           Indent and/or highlight ArchieML markup. This will reveal missing or
@@ -55,6 +66,7 @@ export const FormatCard = () => {
             google.script.run.format({
               shouldIndent,
               shouldHighlight,
+              shouldHideRefs,
             })
           }
         >
@@ -64,7 +76,8 @@ export const FormatCard = () => {
           onClick={() =>
             google.script.run.format({
               shouldIndent: false,
-              shouldHightlight: false,
+              shouldHighlight: false,
+              shouldHideRefs,
             })
           }
         >

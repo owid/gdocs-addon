@@ -1,14 +1,20 @@
 interface ArchieMLFormatConfig {
-  shouldIndent: boolean
-  shouldHighlight: boolean
+  shouldIndent?: boolean
+  shouldHighlight?: boolean
+  shouldHideRefs?: boolean
 }
 
 type ParagraphColors = [string, string]
 
 function format(
-  { shouldHighlight, shouldIndent }: ArchieMLFormatConfig = {
+  {
+    shouldHighlight = true,
+    shouldIndent = true,
+    shouldHideRefs = true,
+  }: ArchieMLFormatConfig = {
     shouldHighlight: true,
     shouldIndent: true,
+    shouldHideRefs: true,
   }
 ) {
   let indentationLevel = 0
@@ -16,9 +22,12 @@ function format(
   const mutedColors: ParagraphColors = ["#CCCCCC", "#FFFFFF"]
   const errorColors: ParagraphColors = ["#FF0000", "#FFFF00"]
   let colors: ParagraphColors
+  const body = getActiveDocument().getBody()
+
+  formatRefs(shouldHideRefs, body)
 
   // Get all paragraphs in the active document
-  const paragraphs = getActiveDocument().getBody().getParagraphs()
+  const paragraphs = body.getParagraphs()
 
   // Iterate over each paragraph
   paragraphs.forEach((paragraph) => {
@@ -86,6 +95,40 @@ function format(
   })
 }
 
+/**
+ * Format text between {ref} and {/ref} tags.
+ *
+ * Limitation: only supports refs within a single paragraph.
+ */
+const formatRefs = (
+  shouldHideRefs: ArchieMLFormatConfig["shouldHideRefs"],
+  body: GoogleAppsScript.Document.Body
+) => {
+  const regex = "{ref}.*?{/ref}"
+  const style = {
+    [DocumentApp.Attribute.FOREGROUND_COLOR]: "#535353",
+    [DocumentApp.Attribute.FONT_FAMILY]: "Courier New",
+    [DocumentApp.Attribute.FONT_SIZE]: shouldHideRefs ? 1 : 11,
+  }
+
+  let matchedRange = body.findText(regex)
+  while (matchedRange !== null) {
+    matchedRange
+      .getElement()
+      .asText()
+      .setAttributes(
+        matchedRange.getStartOffset(),
+        matchedRange.getEndOffsetInclusive(),
+        style
+      )
+    // Look for the next match, from the previous matched element
+    matchedRange = body.findText(regex, matchedRange)
+  }
+}
+
+/**
+ * Format frontmatter properties, e.g. "title: Sustainably manage forests "
+ */
 function formatPropertyName(
   name: string | any[],
   paragraph: GoogleAppsScript.Document.Paragraph,

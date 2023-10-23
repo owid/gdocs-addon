@@ -104,25 +104,52 @@ const formatRefs = (
   shouldHideRefs: ArchieMLFormatConfig["shouldHideRefs"],
   body: GoogleAppsScript.Document.Body
 ) => {
-  const regex = "{ref}.*?{/ref}"
+  const refOpen = "{ref}"
+  const refClose = "{/ref}"
   const style = {
     [DocumentApp.Attribute.FOREGROUND_COLOR]: "#535353",
     [DocumentApp.Attribute.FONT_FAMILY]: "Courier New",
     [DocumentApp.Attribute.FONT_SIZE]: shouldHideRefs ? 1 : 11,
   }
+  const startOfDocumentRange = getActiveDocument()
+    .newRange()
+    .build()
+    .getRangeElements()[0]
 
-  let matchedRange = body.findText(regex)
-  while (matchedRange !== null) {
-    matchedRange
-      .getElement()
-      .asText()
-      .setAttributes(
-        matchedRange.getStartOffset(),
-        matchedRange.getEndOffsetInclusive(),
-        style
+  let matchFrom = startOfDocumentRange
+  // Iterate through all opening tags, and style the text between the opening
+  // and closing ref tags
+  while (body.findText(refOpen, matchFrom)) {
+    let matchedOpen = body.findText(refOpen, matchFrom)
+    // Find the next closing tag, after the opening tag
+    let matchedClose = (matchFrom = body.findText(refClose, matchedOpen))
+
+    // Build a range between the opening and closing tags
+    const rangeBuilder = getActiveDocument().newRange()
+    const range = rangeBuilder
+      .addElementsBetween(
+        matchedOpen.getElement().asText(),
+        matchedOpen.getStartOffset(),
+        matchedClose.getElement().asText(),
+        matchedClose.getEndOffsetInclusive()
       )
-    // Look for the next match, from the previous matched element
-    matchedRange = body.findText(regex, matchedRange)
+      .build()
+
+    // Style the range between the opening and closing tags, including tags
+    range.getRangeElements().forEach((el) => {
+      const refTextToStyle = el.getElement().asText()
+      // if the ref tag is half-way within a paragraph, we only style the
+      // relevant part of the paragraph
+      el.isPartial()
+        ? refTextToStyle.setAttributes(
+            el.getStartOffset(),
+            el.getEndOffsetInclusive(),
+            style
+          )
+        : // when a ref is spanning multiple paragraphs, the in-between
+          // paragraphs will need to be styled entirely
+          refTextToStyle.setAttributes(style)
+    })
   }
 }
 

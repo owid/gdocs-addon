@@ -1,9 +1,5 @@
 function onOpen(e: any) {
-  DocumentApp.getUi()
-    .createAddonMenu()
-    .addItem("Open", "showSidebar")
-    .addItem("Format ArchieML", "format")
-    .addToUi()
+  DocumentApp.getUi().createAddonMenu().addItem("Open", "showSidebar").addToUi()
 }
 
 function showSidebar() {

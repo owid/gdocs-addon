@@ -2,7 +2,7 @@ Google Docs add-on to help authoring ArchieML documents.
 
 ## Usage
 
-1. Install add-on through the https://workspace.google.com/u/0/marketplace/mydomainapps
+1. Install add-on: https://workspace.google.com/u/0/marketplace/app/owid_gdocs_addon/1057307484625
 2. Open a Google Doc with ArchieML content
 3. Extensions > Our World in Data > Format ArchieML
 

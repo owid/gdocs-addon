@@ -28,7 +28,7 @@
 		"eslint": "^8.50.0",
 		"eslint-config-preact": "^1.4.0",
 		"tmex": "^1.0.11",
-		"typescript": "^5.2.2",
+		"typescript": "^5.4.5",
 		"vite": "^4.3.2",
 		"vite-plugin-singlefile": "^0.13.5"
 	}

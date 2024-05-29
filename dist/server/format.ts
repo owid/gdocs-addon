@@ -109,7 +109,7 @@ const formatRefs = (
   const style = {
     [DocumentApp.Attribute.FOREGROUND_COLOR]: "#535353",
     [DocumentApp.Attribute.FONT_FAMILY]: "Courier New",
-    [DocumentApp.Attribute.FONT_SIZE]: shouldHideRefs ? 10 : 11,
+    [DocumentApp.Attribute.FONT_SIZE]: shouldHideRefs ? 8 : 11,
   }
   const startOfDocumentRange = getActiveDocument()
     .newRange()

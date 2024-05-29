@@ -31,6 +31,7 @@ This repo uses [clasp](https://github.com/google/clasp) to sync code with script
 
 ## Public deployment
 
+- `npx clasp push` (this runs automatically with `npm run dev` so you generally don't need it)
 - `npx clasp deploy` (make a note of the version number)
 - Enter the new version number in "Docs Add-on script version" on the [App Configuration page of the Google Workspace Marketplace SDK](https://console.cloud.google.com/apis/api/appsmarket-component.googleapis.com/googleapps_sdk?project=owid-gdocs-addon).
 - Hit "Save"

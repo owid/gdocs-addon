@@ -30,6 +30,6 @@
 		"tmex": "^1.0.11",
 		"typescript": "^5.4.5",
 		"vite": "^5.2.12",
-		"vite-plugin-singlefile": "^0.13.5"
+		"vite-plugin-singlefile": "^2.0.2"
 	}
 }

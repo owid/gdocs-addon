@@ -25,7 +25,7 @@
 		"@preact/preset-vite": "^2.8.2",
 		"@types/google-apps-script": "^1.0.72",
 		"@types/google.script.client-side": "^0.1.2",
-		"eslint": "^8.50.0",
+		"eslint": "^9.6.0",
 		"eslint-config-preact": "^1.4.0",
 		"tmex": "^1.0.11",
 		"typescript": "^5.4.5",

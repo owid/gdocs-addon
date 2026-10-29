@@ -4,7 +4,10 @@ Google Docs add-on to help authoring ArchieML documents.
 
 1. Install add-on: https://workspace.google.com/u/0/marketplace/app/owid_gdocs_addon/1057307484625
 2. Open a Google Doc with ArchieML content
-3. Extensions > Our World in Data > Format ArchieML
+3. Extensions > OWID Gdocs Add-On > Format ArchieML, to format with the default settings
+4. Or Extensions > OWID Gdocs Add-On > Open, to pick the settings in the sidebar and click Format
+
+If you are signed in to several Google accounts in the same browser, the sidebar's Format button can do nothing. The Format ArchieML menu item still works.
 
 ## Development
 

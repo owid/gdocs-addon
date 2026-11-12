@@ -27,21 +27,30 @@ This repo uses [clasp](https://github.com/google/clasp) to sync code with script
 3. Enable the Google Apps Script API: https://script.google.com/home/usersettings
 4. Login to clasp: `npx clasp login`
 
+### Code layout
+
+- `appsscript.json`: the Apps Script manifest (scopes, runtime)
+- `server/`: the Apps Script code, in TypeScript
+- `sidebar/`: the sidebar, in Preact
+- `dist/`: what clasp pushes, build output only (not in git). `npm run build` copies the manifest, compiles `server/` to `dist/server/*.js` and bundles the sidebar into `dist/sidebar/index.html`.
+
+clasp 3 no longer compiles TypeScript itself, so always push with `npm run push` (or `npm run dev`), which builds first. A bare `npx clasp push` would upload whatever is in `dist/`, stale or missing.
+
 ### Local development (sidebar)
 
 - `npm run sidebarDev` to start the local Vite dev server. This is helpful for quickly iterating on the visual components of the sidebar. Remote calls to Google Apps Script functions (e.g. `format()`) will not work.
 
 ### Testing on a document
 
-- `npx clasp open` to open the script in the browser
+- `npx clasp open-script` to open the script in the browser
 - Click Deploy > Test Deployments
 - Select Version: "Latest code", Enabled: "true"
 - Click "Execute" to open the sample document with the extension in its HEAD version
-- `npm run dev` to start the sidebar Vite build watcher and upload local changes to scripts.google.com (HEAD deployment, doesn't impact end users).
+- `npm run dev` to rebuild the sidebar and server code on every change and upload it to scripts.google.com (HEAD deployment, doesn't impact end users). Refresh the test document to load the new code.
 
 ## Public deployment
 
-- `npx clasp push` (this runs automatically with `npm run dev` so you generally don't need it)
+- `npm run push` (this runs automatically with `npm run dev` so you generally don't need it)
 - `npx clasp deploy` (make a note of the version number)
 - Enter the new version number in "Docs Add-on script version" on the [App Configuration page of the Google Workspace Marketplace SDK](https://console.cloud.google.com/apis/api/appsmarket-component.googleapis.com/googleapps_sdk?project=owid-gdocs-addon).
 - Hit "Save"

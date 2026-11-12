@@ -20,7 +20,7 @@ function App() {
           </Typography>
         </CardContent>
         <CardActions>
-          <Box display="flex" alignItems="flex-start">
+          <Box sx={{ display: "flex", alignItems: "flex-start" }}>
             <Button
               variant="contained"
               onClick={() => {

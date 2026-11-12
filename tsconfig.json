@@ -6,8 +6,14 @@
     "noEmit": true,
     "allowJs": true,
     "checkJs": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    // TypeScript 7 no longer loads @types packages or turns off strict mode by default
+    "types": ["google-apps-script", "google.script.client-side"],
+    "strict": false,
+    "skipLibCheck": true
     // "jsxImportSource": "preact"
   },
-  "include": ["node_modules/vite/client.d.ts", "**/*"]
+  "include": ["node_modules/vite/client.d.ts", "**/*"],
+  // dist holds build output only
+  "exclude": ["node_modules", "dist"]
 }

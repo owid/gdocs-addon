@@ -7,29 +7,32 @@
 		"sidebarPreview": "vite preview",
 		"sidebarBuild": "vite build --emptyOutDir",
 		"sidebarBuild:watch": "npm run sidebarBuild -- --watch",
-		"push": "npx clasp push",
-		"push:watch": "npm run push -- --watch",
-		"dev": "npx tmex -n sidebarBuild:watch push:watch"
+		"serverBuild": "tsc -p server",
+		"serverBuild:watch": "npm run serverBuild -- --watch",
+		"manifestBuild": "mkdir -p dist && cp appsscript.json dist/",
+		"build": "npm run manifestBuild && npm run sidebarBuild && npm run serverBuild",
+		"push": "npm run build && npx clasp push",
+		"dev": "npm run build && npx tmex gdocs-addon \"npm run sidebarBuild:watch\" \"npm run serverBuild:watch\" \"npx clasp push --watch\""
 	},
 	"dependencies": {
-		"@emotion/react": "^11.11.1",
-		"@emotion/styled": "^11.11.0",
-		"@mui/material": "^5.14.11",
-		"preact": "^10.22.0"
+		"@emotion/react": "^11.14.0",
+		"@emotion/styled": "^11.14.1",
+		"@mui/material": "^9.5.0",
+		"preact": "^11.2.0"
 	},
 	"prettier": {
 		"semi": false
 	},
 	"devDependencies": {
-		"@google/clasp": "^2.4.2",
-		"@preact/preset-vite": "^2.8.2",
-		"@types/google-apps-script": "^1.0.72",
-		"@types/google.script.client-side": "^0.1.2",
-		"eslint": "^8.50.0",
-		"eslint-config-preact": "^1.4.0",
-		"tmex": "^1.0.11",
-		"typescript": "^5.4.5",
-		"vite": "^5.2.12",
-		"vite-plugin-singlefile": "^0.13.5"
+		"@google/clasp": "^3.4.1",
+		"@preact/preset-vite": "^2.10.6",
+		"@types/google-apps-script": "^2.0.15",
+		"@types/google.script.client-side": "^0.1.5",
+		"eslint": "^9.39.5",
+		"eslint-config-preact": "^2.0.0",
+		"tmex": "^2.0.6",
+		"typescript": "^7.0.2",
+		"vite": "^8.3.8",
+		"vite-plugin-singlefile": "^2.3.4"
 	}
 }

@@ -1,0 +1,15 @@
+// Compiles the server code to JavaScript in dist/server, which clasp pushes.
+// clasp 3 no longer does this conversion itself.
+{
+  "compilerOptions": {
+    // Apps Script's V8 runtime supports ES2019 syntax
+    "target": "ES2019",
+    "outDir": "../dist/server",
+    "rootDir": ".",
+    "types": ["google-apps-script"],
+    "strict": false,
+    "skipLibCheck": true,
+    "removeComments": false
+  },
+  "include": ["*.ts"]
+}

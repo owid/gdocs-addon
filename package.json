@@ -5,14 +5,15 @@
 	"scripts": {
 		"sidebarDev": "vite",
 		"sidebarPreview": "vite preview",
+		"manifestBuild": "node scripts/copy-manifest.mjs",
+		"manifestBuild:watch": "node scripts/copy-manifest.mjs --watch",
 		"sidebarBuild": "vite build --emptyOutDir",
 		"sidebarBuild:watch": "npm run sidebarBuild -- --watch",
-		"serverBuild": "tsc -p server",
-		"serverBuild:watch": "npm run serverBuild -- --watch",
-		"manifestBuild": "mkdir -p dist && cp appsscript.json dist/",
+		"serverBuild": "rm -rf dist/server && tsc -p server",
+		"serverBuild:watch": "tsc -p server --watch",
 		"build": "npm run manifestBuild && npm run sidebarBuild && npm run serverBuild",
 		"push": "npm run build && npx clasp push",
-		"dev": "npm run build && npx tmex gdocs-addon \"npm run sidebarBuild:watch\" \"npm run serverBuild:watch\" \"npx clasp push --watch\""
+		"dev": "npm run build && npx tmex gdocs-addon \"npm run manifestBuild:watch\" \"npm run sidebarBuild:watch\" \"npm run serverBuild:watch\" \"npx clasp push --watch\""
 	},
 	"dependencies": {
 		"@emotion/react": "^11.14.0",

@@ -50,10 +50,12 @@ clasp 3 no longer compiles TypeScript itself, so always push with `npm run push`
 
 ## Public deployment
 
-- `npm run push` (this runs automatically with `npm run dev` so you generally don't need it)
-- `npx clasp deploy` (make a note of the version number)
-- Enter the new version number in "Docs Add-on script version" on the [App Configuration page of the Google Workspace Marketplace SDK](https://console.cloud.google.com/apis/api/appsmarket-component.googleapis.com/googleapps_sdk?project=owid-gdocs-addon).
-- Hit "Save"
+1. From a clean, up-to-date `main`, run `npm run release`. It builds, pushes and creates a new version of the script, then prints the version number. ([scripts/release.mjs](scripts/release.mjs))
+2. Enter that number in "Docs Add-on script version" on the [App Configuration page of the Google Workspace Marketplace SDK](https://console.cloud.google.com/apis/api/appsmarket-component.googleapis.com/googleapps_sdk?project=owid-gdocs-addon), then click "Save". Google has no API for this step.
+
+Users get the new version without reinstalling. If you added OAuth scopes in `appsscript.json`, also add them in the Marketplace SDK and the OAuth consent screen ([Google's guide](https://developers.google.com/workspace/add-ons/how-tos/update-published-add-on)).
+
+`npm run release` updates the same deployment each time, as Google recommends, instead of creating a new one like `npx clasp deploy` does.
 
 ### Project links
 

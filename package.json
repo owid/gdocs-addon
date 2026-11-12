@@ -13,6 +13,7 @@
 		"serverBuild:watch": "tsc -p server --watch",
 		"build": "npm run manifestBuild && npm run sidebarBuild && npm run serverBuild",
 		"push": "npm run build && npx clasp push",
+		"release": "node scripts/release.mjs",
 		"dev": "npm run build && npx tmex gdocs-addon \"npm run manifestBuild:watch\" \"npm run sidebarBuild:watch\" \"npm run serverBuild:watch\" \"npx clasp push --watch\""
 	},
 	"dependencies": {

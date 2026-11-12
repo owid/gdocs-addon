@@ -55,7 +55,7 @@ clasp 3 no longer compiles TypeScript itself, so always push with `npm run push`
 
 Users get the new version without reinstalling. If you added OAuth scopes in `appsscript.json`, also add them in the Marketplace SDK and the OAuth consent screen ([Google's guide](https://developers.google.com/workspace/add-ons/how-tos/update-published-add-on)).
 
-`npm run release` updates the same deployment each time, as Google recommends, instead of creating a new one like `npx clasp deploy` does.
+`npm run release` moves the same deployment, named "Marketplace", to each new version, as Google recommends, instead of creating a new one like `npx clasp deploy` does. Each version is labeled with the commit it was built from: see them with `npx clasp versions`.
 
 ### Project links
 

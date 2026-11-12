@@ -7,7 +7,14 @@ Google Docs add-on to help authoring ArchieML documents.
 3. Extensions > OWID Gdocs Add-On > Format ArchieML, to format with the default settings
 4. Or Extensions > OWID Gdocs Add-On > Open, to pick the settings in the sidebar and click Format
 
-If you are signed in to several Google accounts in the same browser, the sidebar's Format button can do nothing. The Format ArchieML menu item still works.
+### Signed in to several Google accounts?
+
+The sidebar's Format button may do nothing if the doc is open in an account that isn't the browser's default one (the first account you signed in to). This is a long-standing Google bug: [issue 69270374](https://issuetracker.google.com/issues/69270374).
+
+To get around it, either:
+
+- use the Format ArchieML menu item, which isn't affected
+- or open the doc in a browser profile or incognito window where only your OWID account is signed in
 
 ## Development
 
